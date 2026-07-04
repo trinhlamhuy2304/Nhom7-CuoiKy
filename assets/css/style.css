@@ -1,0 +1,60 @@
+/* =========================================================
+   File CSS tùy chỉnh - Website Đăng ký khóa học
+   Thành viên có thể chỉnh sửa màu sắc, font chữ tùy ý ở đây
+   ========================================================= */
+
+body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Banner trang chủ */
+.banner {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    min-height: 320px;
+}
+
+/* Card khóa học */
+.course-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+.course-card .card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+/* Admin sidebar */
+.admin-sidebar {
+    min-height: 100vh;
+    background-color: #212529;
+}
+
+.admin-sidebar a {
+    color: #adb5bd;
+    text-decoration: none;
+    display: block;
+    padding: 12px 20px;
+}
+
+.admin-sidebar a:hover,
+.admin-sidebar a.active {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.admin-login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+}
