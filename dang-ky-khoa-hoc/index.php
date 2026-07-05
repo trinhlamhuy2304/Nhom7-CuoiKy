@@ -9,7 +9,11 @@ require_once __DIR__ . '/config/database.php';
 $page_title = 'Trang chủ';
 
 // ---- Tìm kiếm khóa học theo tên (yêu cầu 4.1) ----
-$keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
+$keyword     = isset($_GET['q']) ? trim($_GET['q']) : '';
+$danh_muc_id = isset($_GET['danh_muc_id']) ? (int) $_GET['danh_muc_id'] : 0;
+
+// Lấy danh sách danh mục để hiển thị bộ lọc
+$danh_muc_list = $pdo->query("SELECT * FROM danh_muc ORDER BY ten_danh_muc ASC")->fetchAll();
 
 $sql = "SELECT kh.*, dm.ten_danh_muc
         FROM khoa_hoc kh
@@ -21,8 +25,24 @@ if ($keyword !== '') {
     $sql .= " AND kh.ten_khoa_hoc LIKE :keyword";
     $params[':keyword'] = '%' . $keyword . '%';
 }
-$sql .= " ORDER BY kh.created_at DESC";
+if ($danh_muc_id > 0) {
+    $sql .= " AND kh.danh_muc_id = :danh_muc_id";
+    $params[':danh_muc_id'] = $danh_muc_id;
+}
 
+// ---- Sắp xếp theo giá (điểm khuyến khích) ----
+$sort = isset($_GET['sort']) ? $_GET['sort'] : '';
+switch ($sort) {
+    case 'gia_tang':
+        $sql .= " ORDER BY kh.hoc_phi ASC";
+        break;
+    case 'gia_giam':
+        $sql .= " ORDER BY kh.hoc_phi DESC";
+        break;
+    default:
+        $sql .= " ORDER BY kh.created_at DESC";
+        break;
+}
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $danh_sach_khoa_hoc = $stmt->fetchAll();
@@ -46,6 +66,20 @@ require_once __DIR__ . '/includes/header.php';
     <?php if ($keyword !== ''): ?>
         <p class="text-muted">Kết quả tìm kiếm cho: "<strong><?= htmlspecialchars($keyword) ?></strong>"</p>
     <?php endif; ?>
+
+    <!-- Bộ lọc theo danh mục -->
+    <div class="mb-4 text-center">
+        <a href="<?= BASE_URL ?>/index.php?q=<?= urlencode($keyword) ?>"
+           class="btn btn-sm <?= $danh_muc_id === 0 ? 'btn-primary' : 'btn-outline-primary' ?> me-2 mb-2">
+            Tất cả
+        </a>
+        <?php foreach ($danh_muc_list as $dm): ?>
+            <a href="<?= BASE_URL ?>/index.php?q=<?= urlencode($keyword) ?>&danh_muc_id=<?= $dm['id'] ?>"
+               class="btn btn-sm <?= $danh_muc_id === (int)$dm['id'] ? 'btn-primary' : 'btn-outline-primary' ?> me-2 mb-2">
+                <?= htmlspecialchars($dm['ten_danh_muc']) ?>
+            </a>
+        <?php endforeach; ?>
+    </div>
 
     <div class="row g-4">
         <?php if (count($danh_sach_khoa_hoc) === 0): ?>
