@@ -3,6 +3,15 @@
 if (!isset($pdo)) {
     require_once __DIR__ . '/../../config/database.php';
 }
+
+// Xác định menu đang active dựa theo tên thư mục cha của file đang chạy
+// (thay cho cách dùng strpos lồng nhau cũ, dễ nhận nhầm khi có file mới)
+$current_dir = basename(dirname($_SERVER['PHP_SELF']));
+if (!function_exists('menu_active')) {
+    function menu_active(string $dir, string $current_dir): string {
+        return $current_dir === $dir ? 'active' : '';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -22,16 +31,16 @@ if (!isset($pdo)) {
             <i class="bi bi-mortarboard-fill fs-3"></i>
             <h5 class="mt-2 mb-0">Admin Panel</h5>
         </div>
-        <a href="<?= BASE_URL ?>/admin/index.php" class="<?= basename($_SERVER['PHP_SELF']) === 'index.php' && strpos($_SERVER['PHP_SELF'], '/admin/') !== false && strpos($_SERVER['PHP_SELF'], 'khoa-hoc') === false && strpos($_SERVER['PHP_SELF'], 'danh-muc') === false ? 'active' : '' ?>">
+        <a href="<?= BASE_URL ?>/admin/index.php" class="<?= menu_active('admin', $current_dir) ?>">
             <i class="bi bi-speedometer2"></i> Dashboard
         </a>
-        <a href="<?= BASE_URL ?>/admin/khoa-hoc/index.php" class="<?= strpos($_SERVER['PHP_SELF'], '/khoa-hoc/') !== false ? 'active' : '' ?>">
+        <a href="<?= BASE_URL ?>/admin/khoa-hoc/index.php" class="<?= menu_active('khoa-hoc', $current_dir) ?>">
             <i class="bi bi-journal-bookmark"></i> Quản lý khóa học
         </a>
-        <a href="<?= BASE_URL ?>/admin/danh-muc/index.php" class="<?= strpos($_SERVER['PHP_SELF'], '/danh-muc/') !== false ? 'active' : '' ?>">
+        <a href="<?= BASE_URL ?>/admin/danh-muc/index.php" class="<?= menu_active('danh-muc', $current_dir) ?>">
             <i class="bi bi-tags"></i> Quản lý danh mục
         </a>
-        <a href="<?= BASE_URL ?>/admin/dang-ky/index.php" class="<?= strpos($_SERVER['PHP_SELF'], '/dang-ky/') !== false ? 'active' : '' ?>">
+        <a href="<?= BASE_URL ?>/admin/dang-ky/index.php" class="<?= menu_active('dang-ky', $current_dir) ?>">
             <i class="bi bi-person-check"></i> Danh sách đăng ký
         </a>
         <a href="<?= BASE_URL ?>/index.php" target="_blank">
