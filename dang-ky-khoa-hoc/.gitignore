@@ -1,0 +1,15 @@
+# Môi trường / IDE
+.vscode/
+.idea/
+*.log
+
+# File cấu hình cá nhân (nếu tách riêng sau này)
+config/database.local.php
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Ảnh upload trong quá trình test (giữ lại thư mục nhưng bỏ qua file)
+uploads/*
+!uploads/README.txt
