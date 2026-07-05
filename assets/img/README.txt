@@ -1,1 +1,4 @@
-Thư mục chứa hình ảnh khóa học. Đặt file no-image.jpg mặc định và các ảnh khoa-hoc-mau-*.jpg vào đây.
+assets/img/khoa-hoc-mau-1.jpg
+assets/img/khoa-hoc-mau-2.jpg
+assets/img/khoa-hoc-mau-3.jpg
+assets/img/khoa-hoc-mau-4.jpg

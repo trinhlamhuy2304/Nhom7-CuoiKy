@@ -119,6 +119,13 @@ dang-ky-khoa-hoc/
 
 
 ## 10. Hình ảnh giao diện
+![Trang chủ](assets/img/trangchu1.png)
+![Trang chủ](assets/img/trangchu2.png)
+![Trang chủ](assets/img/trangchu3.png)
+![Trang chủ](assets/img/trangchu4.png)
+![Trang chủ](assets/img/trangchu5.png)
+![Trang chủ](assets/img/trangchu6.png)
+![Trang chủ](assets/img/trangchu7.png)
 
 ## 11. Link video demo
 
